@@ -7,7 +7,7 @@
 [Node.js](http://nodejs.org/).*
 
 * Fork this repository.
-* `$ git clone git@github.com:<your username>/thinkster-django-angular-boilerplate.git`
+* `$ git clone https://github.com/<your username>/thinkster-django-angular-boilerplate.git`
 * `$ mkvirtualenv thinkster-djangular`
 * `$ cd thinkster-django-angular-boilerplate/`
 * `$ pip install -r requirements.txt`
