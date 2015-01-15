@@ -1,0 +1,60 @@
+# -*- coding: utf-8 -*-
+
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
+from django.db import models
+
+#################################################################################################
+
+class AccountManager(BaseUserManager):	#User account manager
+    def create_user(self, email, password=None, **kwargs):	#Overriden method
+        if not email:		#Validation
+            raise ValueError('Wymagany poprawny adres email.')
+
+        if not kwargs.get('username'):	#Validation
+            raise ValueError('Wymagana poprawna nazwa użytkownika.')
+
+        account = self.model(
+            email=self.normalize_email(email), username=kwargs.get('username')
+        )	#Create Account object
+
+        account.set_password(password)	#Set password
+        account.save()
+
+        return account
+
+    def create_superuser(self, email, password, **kwargs):	#Overriden method
+        account = self.create_user(email, password, **kwargs)	#Create user
+
+        account.is_admin = True	#Make it superuser
+        account.save()
+
+        return account
+
+#################################################################################################
+
+class Account(AbstractBaseUser):	#User account
+    email = models.EmailField(unique=True)	#As login
+    username = models.CharField(max_length=40, unique=True)	#username
+
+    first_name = models.CharField(max_length=40, blank=True)
+    last_name = models.CharField(max_length=40, blank=True)
+
+    is_admin = models.BooleanField(default=False)	#If is superuser
+
+    created_at = models.DateTimeField(auto_now_add=True)	#When user created
+    updated_at = models.DateTimeField(auto_now=True)		#When changes last saved
+
+    objects = AccountManager()	#Manager class object
+
+    USERNAME_FIELD = 'email'	#email is used as login
+    REQUIRED_FIELDS = ['username']	#username is also required
+
+    def __unicode__(self):	#String representation of object, ToString() equivalent
+        return self.email
+
+    def get_full_name(self):	#Unused method
+        return ' '.join([self.first_name, self.last_name])
+
+    def get_short_name(self):	#Unused method
+        return self.first_name
