@@ -13,7 +13,7 @@ router.register(r'accounts', AccountViewSet)
 urlpatterns = patterns(
     '',
 
-	url(r'^api/v1/', include(router.urls)),	#URL for accounts
+	url(r'^api/v1/', include('router.urls')),	#URL for accounts
 
     url('^.*$', IndexView.as_view(), name='index'),
 )
