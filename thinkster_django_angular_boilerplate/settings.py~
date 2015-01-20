@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'compressor',
-    'authentication',
+    'authentication',	#Install authentication app
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,3 +117,10 @@ ALLOWED_HOSTS = ['*']
 
 #Set Account as authentication model
 AUTH_USER_MODEL = 'authentication.Account'	#In authentication app find Account model
+
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+

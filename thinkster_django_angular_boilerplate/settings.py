@@ -117,3 +117,5 @@ ALLOWED_HOSTS = ['*']
 
 #Set Account as authentication model
 AUTH_USER_MODEL = 'authentication.Account'	#In authentication app find Account model
+
+

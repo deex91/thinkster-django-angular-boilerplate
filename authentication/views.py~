@@ -10,7 +10,7 @@ import json
 
 from django.contrib.auth import authenticate, login
 
-from rest_framework improt status, views
+from rest_framework import status, views
 from rest_framework.response import Response
 
 class AccountViewSet(viewsets.ModelViewSet):	#ViewSet for Account
@@ -48,7 +48,7 @@ class LoginView(views.APIView):		#View for login
         email = data.get('email', None)
         password = data.get('password', None)
 
-        account = authenticate(email=email, password=password)
+        account = authenticate(email=email, Account.password=password)
 
         if account is not None:
             if account.is_active:
@@ -60,12 +60,12 @@ class LoginView(views.APIView):		#View for login
             else:
                 return Response({
                     'status': 'Unauthorized',
-                    'message': 'This account has been disabled.'
+                    'message': 'Konto jest nieaktywne.'
                 }, status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({
                 'status': 'Unauthorized',
-                'message': 'Username/password combination invalid.'
+                'message': 'Niepoprawny email/hasło.'
             }, status=status.HTTP_401_UNAUTHORIZED)
 
 

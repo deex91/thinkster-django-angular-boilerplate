@@ -19,6 +19,18 @@
 
     vm.register = register;
 
+	/**
+	 * @name activate
+	 * @desc Actions to be performed when this controller is instantiated
+	 * @memberOf thinkster.authentication.controllers.RegisterController
+	 */
+	function activate() {
+	  // If the user is authenticated, they should not be here.
+	  if (Authentication.isAuthenticated()) {
+		$location.url('/');
+	  }
+	}
+
     /**
 	* When Submit on Register form clicked
     * @name register
