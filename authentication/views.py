@@ -13,6 +13,10 @@ from django.contrib.auth import authenticate, login
 from rest_framework import status, views
 from rest_framework.response import Response
 
+from django.contrib.auth import logout
+
+from rest_framework import permissions
+
 class AccountViewSet(viewsets.ModelViewSet):	#ViewSet for Account
     lookup_field = 'username'	#Lookup criterion
     queryset = Account.objects.all()
@@ -27,14 +31,14 @@ class AccountViewSet(viewsets.ModelViewSet):	#ViewSet for Account
 
         return (permissions.IsAuthenticated(), IsAccountOwner(),)
 
-	def create(self, request):	#Create user
-	    serializer = self.serializer_class(data=request.data)
+    def create(self, request):	#Create user
+        serializer = self.serializer_class(data=request.data)
 
-	    if serializer.is_valid():
-	    	Account.objects.create_user(**serializer.validated_data)
-	    	return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            Account.objects.create_user(**serializer.validated_data)
+            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
-	    return Response({
+        return Response({
 	    		'status': 'Bad request',
 	    		'message': 'Konto nie może zostać utworzone.'
 	    	}, status=status.HTTP_400_BAD_REQUEST)
@@ -68,6 +72,14 @@ class LoginView(views.APIView):		#View for login
                 'message': 'Niepoprawny email/hasło.'
             }, status=status.HTTP_401_UNAUTHORIZED)
 
+###################################################################################################
 
+class LogoutView(views.APIView):        #View for logout
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        logout(request)
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
 
 

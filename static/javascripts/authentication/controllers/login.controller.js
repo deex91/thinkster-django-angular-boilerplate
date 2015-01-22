@@ -41,5 +41,6 @@
     function login() {
       Authentication.login(vm.email, vm.password);
     }
+
   }
 })();
