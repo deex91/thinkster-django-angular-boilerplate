@@ -20,6 +20,10 @@
 	  controller: 'LoginController',
 	  controllerAs: 'vm',
 	  templateUrl: '/static/templates/authentication/login.html'
-	}).otherwise('/');
+	}).when('/+:username', {
+      controller: 'ProfileController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/profiles/profile.html'
+    }).otherwise('/');
   }
 })();
