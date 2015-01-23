@@ -73,7 +73,7 @@
     * @memberOf thinkster.profiles.controllers.ProfileSettingsController
     */
     function destroy() {
-      Profile.destroy(vm.profile.username).then(profileSuccessFn, profileErrorFn);
+      Profile.destroy(vm.profile).then(profileSuccessFn, profileErrorFn);
 
       /**
       * @name profileSuccessFn
