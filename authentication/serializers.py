@@ -15,23 +15,23 @@ class AccountSerializer(serializers.ModelSerializer):	#Serializer for Account mo
                   'confirm_password',)
         read_only_fields = ('created_at', 'updated_at',)	#self-updating fields
 
-def create(self, validated_data):	#Deserialization: JSON->model
-    return Account.objects.create(**validated_data)
+    def create(self, validated_data):	#Deserialization: JSON->model
+        return Account.objects.create(**validated_data)
 
-def update(self, instance, validated_data):		#Deserialization
-    instance.username = validated_data.get('username', instance.username)	#Update username
+    def update(self, instance, validated_data):		#Deserialization
+        instance.username = validated_data.get('username', instance.username)	#Update username
 
-    instance.save()
+        instance.save()
 
-#Update password if it's in JSON
-    password = validated_data.get('password', None)
-    confirm_password = validated_data.get('confirm_password', None)
+    #Update password if it's in JSON
+        password = validated_data.get('password', None)
+        confirm_password = validated_data.get('confirm_password', None)
 
-    if password and confirm_password and password == confirm_password:
-		instance.set_password(password)
-		instance.save()
+        if password and confirm_password and password == confirm_password:
+            instance.set_password(password)
+            instance.save()
 
-	#Authenticate user again
-    update_session_auth_hash(self.context.get('request'), instance)
+        #Authenticate user again
+        update_session_auth_hash(self.context.get('request'), instance)
 
-    return instance
+        return instance
