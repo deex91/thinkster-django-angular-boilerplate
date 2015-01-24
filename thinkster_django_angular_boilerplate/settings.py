@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'compressor',
     'authentication',	#Install authentication app
+    'surveys',	#Install surveys app
 )
 
 MIDDLEWARE_CLASSES = (
