@@ -9,5 +9,5 @@ class Survey(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return '{0}'.format(self.content)
+        return '{0}'.format(self.title)
 
