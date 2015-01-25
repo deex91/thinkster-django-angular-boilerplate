@@ -28,6 +28,10 @@
       controller: 'ProfileSettingsController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/profiles/settings.html'
+    }).when('/', {
+      controller: 'IndexController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/layout/index.html'
     }).otherwise('/');
   }
 })();

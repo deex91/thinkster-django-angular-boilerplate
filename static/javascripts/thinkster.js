@@ -10,6 +10,8 @@
       'thinkster.routes',
       'thinkster.authentication',
       'thinkster.layout',
+      'thinkster.surveys',
+      'thinkster.utils',
       'thinkster.profiles'
     ]);
 
