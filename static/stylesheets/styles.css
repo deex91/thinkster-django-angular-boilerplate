@@ -1,0 +1,15 @@
+.no-surveys-here {
+  text-align: center;
+}
+
+.survey {}
+
+.survey .survey__meta {
+  font-weight: bold;
+  text-align: right;
+  padding-bottom: 19px;
+}
+
+.survey .survey__meta a:hover {
+  text-decoration: none;
+}
