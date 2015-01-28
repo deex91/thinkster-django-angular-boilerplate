@@ -10,13 +10,13 @@
     .controller('ProfileSettingsController', ProfileSettingsController);
 
   ProfileSettingsController.$inject = [
-    '$location', '$routeParams', 'Authentication', 'Profile'//, 'Snackbar'
+    '$location', '$routeParams', 'Authentication', 'Profile', 'Snackbar'
   ];
 
   /**
   * @namespace ProfileSettingsController
   */
-  function ProfileSettingsController($location, $routeParams, Authentication, Profile/*, Snackbar*/) {
+  function ProfileSettingsController($location, $routeParams, Authentication, Profile, Snackbar) {
     var vm = this;
 
     vm.destroy = destroy;
@@ -37,12 +37,12 @@
       // Redirect if not logged in
       if (!authenticatedAccount) {
         $location.url('/');
-        //Snackbar.error('You are not authorized to view this page.');
+        Snackbar.error('You are not authorized to view this page.');
       } else {
         // Redirect if logged in, but not the owner of this profile.
         if (authenticatedAccount.username !== username) {
           $location.url('/');
-          //Snackbar.error('You are not authorized to view this page.');
+          Snackbar.error('You are not authorized to view this page.');
         }
       }
 
@@ -62,7 +62,7 @@
       */
       function profileErrorFn(data, status, headers, config) {
         $location.url('/');
-        //Snackbar.error('That user does not exist.');
+        Snackbar.error('That user does not exist.');
       }
     }
 
@@ -83,7 +83,7 @@
         Authentication.unauthenticate();
         window.location = '/';
 
-        //Snackbar.show('Your account has been deleted.');
+        Snackbar.show('Your account has been deleted.');
       }
 
 
@@ -92,7 +92,7 @@
       * @desc Display error snackbar
       */
       function profileErrorFn(data, status, headers, config) {
-        //Snackbar.error(data.error);
+        Snackbar.error(data.error);
       }
     }
 
@@ -110,7 +110,7 @@
       * @desc Show success snackbar
       */
       function profileSuccessFn(data, status, headers, config) {
-        //Snackbar.show('Your profile has been updated.');
+        Snackbar.show('Your profile has been updated.');
       }
 
 
@@ -119,7 +119,7 @@
       * @desc Show error snackbar
       */
       function profileErrorFn(data, status, headers, config) {
-        //Snackbar.error(data.error);
+        Snackbar.error(data.error);
       }
     }
   }
