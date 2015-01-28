@@ -48,7 +48,7 @@
     * @memberOf thinkster.utils.services.Snackbar
     */
     function error(content, options) {
-      _snackbar('Error: ' + content, options);
+      _snackbar('Błąd: ' + content, options);
     }
 
 

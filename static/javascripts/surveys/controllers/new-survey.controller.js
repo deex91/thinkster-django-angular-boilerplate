@@ -42,7 +42,7 @@
       * @desc Show snackbar with success message
       */
       function createSurveySuccessFn(data, status, headers, config) {
-        Snackbar.show('Success! Survey created.');
+        Snackbar.show('Ankieta została utworzona.');
       }
 
 
