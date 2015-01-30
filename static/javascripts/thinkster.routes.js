@@ -20,7 +20,11 @@
 	  controller: 'LoginController',
 	  controllerAs: 'vm',
 	  templateUrl: '/static/templates/authentication/login.html'
-	}).when('/+:username', {
+	}).when('/add', {
+      controller: 'SurveyAddController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/surveys/add.html'
+    }).when('/+:username', {
       controller: 'ProfileController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/profiles/profile.html'
