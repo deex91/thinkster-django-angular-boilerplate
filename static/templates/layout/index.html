@@ -1,7 +1,5 @@
 <surveys surveys="vm.surveys" ng-show="vm.surveys && vm.surveys.length"></surveys>
 
-<a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-add-new-survey"
-  href="javascript:void(0)"
-  ng-show="vm.isAuthenticated"
-  ng-dialog="/static/templates/surveys/new-survey.html"
-  ng-dialog-controller="NewSurveyController as vm"></a>
+<a class="btn btn-primary btn-fab mdi-content-add btn-add-new-survey"
+  href="/add"
+  ng-show="vm.isAuthenticated"></a>
