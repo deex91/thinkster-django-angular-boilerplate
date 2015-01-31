@@ -1,6 +1,29 @@
 <div class="add">
-  <div class="jumbotron">
-    <h4>Dodaj ankietę</h4>
-  </div>
+      <div class="jumbotron">
+        <h4>Dodaj ankietę</h4>
+      </div>
+
+    <form role="form" class="addform" ng-submit="vm.add()">
+      <div class="form-group jumbotron">
+        <label for="addform__title">Tytuł</label>
+        <input type="text" class="form-control" id="addform__title" ng-model="vm.title" placeholder="np. Badanie" />
+      </div>
+
+      <div class="jumbotron" data-ng-repeat="question in vm.questions">
+        <div class="form-group">
+            <label for="question">Pytanie</label>
+            <input type="text" ng-model="question.content" class="form-control" id="question" placeholder="np. Podaj płeć" />
+        </div>
+        <div class="form-group" data-ng-repeat="answer in question.answers">
+            <label for="answer">Odpowiedź</label>
+            <input type="text" ng-model="answer.content" class="form-control" id="answer" placeholder="np. Kobieta" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+      </div>
+    </form>
+
 </div>
 

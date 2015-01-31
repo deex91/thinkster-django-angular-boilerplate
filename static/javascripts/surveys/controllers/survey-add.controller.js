@@ -19,6 +19,13 @@
   function SurveyAddController($location, Authentication, Surveys, Snackbar) {
     var vm = this;
 
+    vm.add = add;
+
+    vm.title = '';
+
+    vm.questions = [{id: 0}];
+    vm.questions[0].answers = [{id: 0}];
+
     activate();
 
 
@@ -35,6 +42,16 @@
         $location.url('/');
         Snackbar.error('Brak autoryzacji.');
       }
+    }
+
+    function addQuestion() {
+        var newItemNo = vm.questions.length;
+        vm.questions.push({'id':newItemNo});
+        vm.questions[newItemNo].answers = [{'id': 0}];
+    }
+
+    function add() {
+        addQuestion();
     }
   }
 })();
