@@ -20,6 +20,8 @@
     var vm = this;
 
     vm.add = add;
+    vm.addQuestion = addQuestion;
+    vm.addAnswer = addAnswer;
 
     vm.title = '';
 
@@ -48,6 +50,12 @@
         var newItemNo = vm.questions.length;
         vm.questions.push({'id':newItemNo});
         vm.questions[newItemNo].answers = [{'id': 0}];
+    }
+
+    function addAnswer(questionId) {
+        var currentAnswers = vm.questions[questionId].answers;
+        var newItemNo = currentAnswers.length;
+        currentAnswers.push({'id':newItemNo});
     }
 
     function add() {
