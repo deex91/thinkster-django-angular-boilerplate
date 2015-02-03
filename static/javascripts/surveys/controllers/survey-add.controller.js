@@ -10,20 +10,18 @@
     .controller('SurveyAddController', SurveyAddController);
 
   SurveyAddController.$inject = [
-    '$location', 'Authentication', 'Surveys', 'Snackbar'
+    '$scope', '$location', 'Authentication', 'Surveys', 'Snackbar'
   ];
 
   /**
   * @namespace SurveyAddController
   */
-  function SurveyAddController($location, Authentication, Surveys, Snackbar) {
+  function SurveyAddController($scope, $location, Authentication, Surveys, Snackbar) {
     var vm = this;
 
     vm.add = add;
     vm.addQuestion = addQuestion;
     vm.addAnswer = addAnswer;
-
-    vm.title = '';
 
     vm.questions = [{id: 0}];
     vm.questions[0].answers = [{id: 0}];
@@ -58,8 +56,56 @@
         currentAnswers.push({'id':newItemNo});
     }
 
+    function validate() {
+        if(vm.title == undefined || vm.title=='')
+            return false;
+
+        var i, j;
+        for(i = 0; i < vm.questions.length; ++i) {
+            if(vm.questions[i].content == undefined || vm.questions[i].content=='')
+                return false;
+            for(j = 0; j < vm.questions[i].answers.length; ++j) {
+                if(vm.questions[i].answers[j].content == undefined || vm.questions[i].answers[j].content=='')
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     function add() {
-        Surveys.create(vm.title, vm.questions);
+        if(validate() == false) {
+            Snackbar.error('Uzupełnij wszystkie pola');
+            return;
+        }
+
+        $scope.$broadcast('survey.created', {
+            title: vm.title,
+            author: {
+            username: Authentication.getAuthenticatedAccount().username
+            }
+        });
+
+        Surveys.create(vm.title, vm.questions).then(createSurveySuccessFn, createSurveyErrorFn);
+
+        /**
+        * @name createSurveySuccessFn
+        * @desc Show snackbar with success message
+        */
+        function createSurveySuccessFn(data, status, headers, config) {
+          Snackbar.show('Ankieta została utworzona.');
+          $location.url('/')
+        }
+
+
+        /**
+        * @name createSurveyErrorFn
+        * @desc Propogate error event and show snackbar with error message
+        */
+        function createSurveyErrorFn(data, status, headers, config) {
+          $scope.$broadcast('survey.created.error');
+          Snackbar.error(data.error);
+        }
     }
   }
 })();
