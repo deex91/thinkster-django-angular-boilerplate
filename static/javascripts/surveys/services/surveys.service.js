@@ -44,9 +44,10 @@
     * @returns {Promise}
     * @memberOf thinkster.surveys.services.Surveys
     */
-    function create(title) {
+    function create(title, questions) {
       return $http.post('/api/v1/surveys/', {
-        title: title
+        title: title,
+        questions: questions
       });
     }
 

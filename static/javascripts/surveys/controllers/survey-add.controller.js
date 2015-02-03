@@ -59,7 +59,7 @@
     }
 
     function add() {
-        addQuestion();
+        Surveys.create(vm.title, vm.questions);
     }
   }
 })();

@@ -17,8 +17,7 @@ class SurveyViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save(author=self.request.user)
-
-        return super(SurveyViewSet, self).perform_create(serializer)
+        return instance
 
 
 

@@ -11,3 +11,18 @@ class Survey(models.Model):
     def __unicode__(self):
         return '{0}'.format(self.title)
 
+
+class Question(models.Model):
+    survey = models.ForeignKey(Survey, related_name='questions')
+    content = models.TextField()
+
+    def __unicode__(self):
+        return '{0}'.format(self.content)
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, related_name='answers')
+    content = models.TextField()
+
+    def __unicode__(self):
+        return '{0}'.format(self.content)
