@@ -30,3 +30,14 @@ class AccountSurveysViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
 
         return Response(serializer.data)
+
+
+class SurveyIdViewSet(viewsets.ViewSet):
+    queryset = Survey.objects.select_related('id').all()
+    serializer_class = SurveySerializer
+
+    def retrieve(self, request, pk=None):
+        queryset = self.queryset.filter(id=pk)
+        serializer = self.serializer_class(queryset, many=True)
+
+        return Response(serializer.data)

@@ -19,7 +19,8 @@
     var Surveys = {
       all: all,
       create: create,
-      get: get
+      get: get,
+      show: show
     };
 
     return Surveys;
@@ -60,6 +61,10 @@
      */
     function get(username) {
       return $http.get('/api/v1/accounts/' + username + '/surveys/');
+    }
+
+    function show(id) {
+      return $http.get('/api/v1/survey/' + id + '/');
     }
   }
 })();

@@ -10,13 +10,13 @@
     .controller('SurveyShowController', SurveyShowController);
 
   SurveyShowController.$inject = [
-    '$scope', '$location', 'Authentication', 'Surveys', 'Snackbar'
+    '$routeParams', '$scope', '$location', 'Authentication', 'Surveys', 'Snackbar'
   ];
 
   /**
   * @namespace SurveyShowController
   */
-  function SurveyShowController($scope, $location, Authentication, Surveys, Snackbar) {
+  function SurveyShowController($routeParams, $scope, $location, Authentication, Surveys, Snackbar) {
     var vm = this;
 
     activate();
@@ -28,7 +28,11 @@
     * @memberOf thinkster.surveys.controllers.SurveyShowController
     */
     function activate() {
+        var id = $routeParams.id;
 
+        Surveys.show(id);
+
+        Snackbar.show(id);
     }
 
   }
