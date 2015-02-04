@@ -1,4 +1,4 @@
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, viewsets, status
 from rest_framework.response import Response
 
 from surveys.models import Survey
@@ -39,5 +39,12 @@ class SurveyIdViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         queryset = self.queryset.filter(id=pk)
         serializer = self.serializer_class(queryset, many=True)
+        data_len = serializer.data.__len__()
 
-        return Response(serializer.data)
+        if data_len > 0:
+            return Response(serializer.data)
+
+        return Response({
+	    		'status': 'Bad request',
+	    		'message': 'Ankieta nie istnieje.'
+	    	}, status=status.HTTP_400_BAD_REQUEST)
