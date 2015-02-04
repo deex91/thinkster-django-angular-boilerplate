@@ -24,7 +24,11 @@
       controller: 'SurveyAddController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/surveys/add.html'
-    }).when('/+:username', {
+    }).when('/survey/:id', {
+      controller: 'SurveyShowController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/surveys/show.html'
+}).when('/+:username', {
       controller: 'ProfileController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/profiles/profile.html'
