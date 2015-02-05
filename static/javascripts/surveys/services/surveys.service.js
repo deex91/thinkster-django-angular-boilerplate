@@ -21,7 +21,8 @@
       create: create,
       get: get,
       show: show,
-      answer: answer
+      answer: answer,
+      stats: stats
     };
 
     return Surveys;
@@ -72,6 +73,10 @@
       return $http.post('/api/v1/solution/', {
         answers: answers
       });
+    }
+
+    function stats(id) {
+      return $http.get('/api/v1/stats/' + id + '/');
     }
   }
 })();
