@@ -26,3 +26,7 @@ class Answer(models.Model):
 
     def __unicode__(self):
         return '{0}'.format(self.content)
+
+
+class SolutionAnswer(models.Model):
+    answer = models.ForeignKey(Answer, related_name='solutions')
