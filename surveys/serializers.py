@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from authentication.serializers import AccountSerializer
-from surveys.models import Survey, Question, Answer
+from surveys.models import Survey, Question, Answer, SolutionAnswer
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -23,6 +23,25 @@ class QuestionSerializer(serializers.ModelSerializer):
         read_only_fields = 'id'
 
 
+class SingleAnswerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SolutionAnswer
+        fields = ('id', 'answer_id')
+        read_only_fields = 'id'
+
+
+class SolutionAnswerSerializer(serializers.ModelSerializer):
+    answers = SingleAnswerSerializer(many=True)
+
+    class Meta:
+        fields = 'answers'
+
+    def create(self, validated_data):
+        solution_data = validated_data.pop('answers')
+        for answer_data in solution_data:
+            solution_answer = SolutionAnswer.objects.create(**answer_data)
+            solution_answer.save()
 
 
 class SurveySerializer(serializers.ModelSerializer):

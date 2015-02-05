@@ -7,7 +7,7 @@ from rest_framework_nested import routers
 from authentication.views import AccountViewSet
 from authentication.views import LoginView
 from authentication.views import LogoutView
-from surveys.views import AccountSurveysViewSet, SurveyViewSet, SurveyIdViewSet
+from surveys.views import AccountSurveysViewSet, SurveyViewSet, SurveyIdViewSet, SolutionAnswerViewSet
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
@@ -15,6 +15,8 @@ router.register(r'accounts', AccountViewSet)
 router.register(r'surveys', SurveyViewSet)
 
 router.register(r'survey', SurveyIdViewSet)
+
+router.register(r'solution', SolutionAnswerViewSet)
 
 accounts_router = routers.NestedSimpleRouter(
     router, r'accounts', lookup='account'

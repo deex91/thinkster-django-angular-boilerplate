@@ -1,9 +1,26 @@
 from rest_framework import permissions, viewsets, status
 from rest_framework.response import Response
 
-from surveys.models import Survey
+from surveys.models import Survey, SolutionAnswer
 from surveys.permissions import IsAuthorOfSurvey
-from surveys.serializers import SurveySerializer
+from surveys.serializers import SurveySerializer, SolutionAnswerSerializer
+
+
+class SolutionAnswerViewSet(viewsets.ModelViewSet):
+    queryset = SolutionAnswer.objects.order_by('id')
+    serializer_class = SolutionAnswerSerializer
+
+    def get_permissions(self):
+        return (permissions.AllowAny(),)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.create(request.data)
+        return Response(status=status.HTTP_201_CREATED)
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        return instance
 
 
 class SurveyViewSet(viewsets.ModelViewSet):

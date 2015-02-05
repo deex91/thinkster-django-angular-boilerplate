@@ -20,7 +20,8 @@
       all: all,
       create: create,
       get: get,
-      show: show
+      show: show,
+      answer: answer
     };
 
     return Surveys;
@@ -65,6 +66,12 @@
 
     function show(id) {
       return $http.get('/api/v1/survey/' + id + '/');
+    }
+
+    function answer(answers) {
+      return $http.post('/api/v1/solution/', {
+        answers: answers
+      });
     }
   }
 })();

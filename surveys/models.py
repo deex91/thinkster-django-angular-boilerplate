@@ -29,4 +29,4 @@ class Answer(models.Model):
 
 
 class SolutionAnswer(models.Model):
-    answer = models.ForeignKey(Answer, related_name='solutions')
+    answer_id = models.IntegerField(default=-1)

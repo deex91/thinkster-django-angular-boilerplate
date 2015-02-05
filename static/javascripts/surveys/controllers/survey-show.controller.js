@@ -49,8 +49,47 @@
         }
     }
 
+    function validate() {
+        var i;
+        for(i = 0; i < vm.survey.questions.length; ++i) {
+            if(vm.survey.questions[i].selected == undefined)
+                return false;
+        }
+
+        return true;
+    }
+
     function submit() {
-        Snackbar.show('Submit');
+        if(validate() == false) {
+            Snackbar.error('Odpowiedz na wszystkie pytania.');
+            return;
+        }
+
+        var answers = [];
+        var i;
+        for(i = 0; i < vm.survey.questions.length; ++i) {
+            answers.push({'answer_id':vm.survey.questions[i].selected.id});
+        }
+
+        Surveys.answer(answers).then(createSolutionSuccessFn, createSolutionErrorFn);
+
+        /**
+        * @name createSolutionSuccessFn
+        * @desc Show snackbar with success message
+        */
+        function createSolutionSuccessFn(data, status, headers, config) {
+          Snackbar.show('Odpowiedź została wysłana.');
+          $location.url('/')
+        }
+
+
+        /**
+        * @name createSolutionErrorFn
+        * @desc Propogate error event and show snackbar with error message
+        */
+        function createSolutionErrorFn(data, status, headers, config) {
+            Snackbar.error(data.error);
+        }
     }
 
   }
