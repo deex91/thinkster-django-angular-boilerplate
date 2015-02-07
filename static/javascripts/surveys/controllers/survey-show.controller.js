@@ -23,6 +23,8 @@
     vm.showStats = showStats;
     vm.showNumberOfSolutions = showNumberOfSolutions;
 
+    var isSurveyOwner = false;
+
     activate();
 
 
@@ -39,7 +41,10 @@
         function surveySuccessFn(data, status, headers, config) {
           if(data.data.length == 1) {
               vm.survey = data.data[0];
-              makeStats();
+              var authenticatedAccount = Authentication.getAuthenticatedAccount();
+              isSurveyOwner = authenticatedAccount != undefined && authenticatedAccount.id == vm.survey.author.id;
+              if(isSurveyOwner == true)
+                makeStats();
           }
           else {
             $location.url('/');
@@ -81,10 +86,15 @@
     }
 
     function showNumberOfSolutions() {
-        return 'Wypełniono ' + vm.numberOfSolutions + ' razy';
+        if(isSurveyOwner == true)
+            return 'Wypełniono ' + vm.numberOfSolutions + ' razy';
+        return '';
     }
 
     function showStats(id) {
+        if(isSurveyOwner == false)
+            return '';
+
         var searched = vm.stats.find(isSearched);
 
         if(searched == undefined)
