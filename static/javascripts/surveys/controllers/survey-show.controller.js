@@ -21,6 +21,7 @@
 
     vm.submit = submit;
     vm.showStats = showStats;
+    vm.showNumberOfSolutions = showNumberOfSolutions;
 
     activate();
 
@@ -48,14 +49,21 @@
           function makeStats() {
               var i, j;
               vm.stats = [];
+              vm.numberOfSolutions = 0;
+              var ids = [];
               for(i = 0; i < vm.survey.questions.length; ++i) {
                   for(j = 0; j < vm.survey.questions[i].answers.length; ++j) {
+                      if(i == 0)
+                        ids.push(vm.survey.questions[i].answers[j].id);
                       Surveys.stats(vm.survey.questions[i].answers[j].id).then(statsSuccessFn, statsErrorFn);
                   }
               }
 
               function statsSuccessFn(data, status, headers, config) {
                   vm.stats.push(data.data);
+                  var idx = ids.indexOf(parseInt(data.data.id));
+                  if(idx != -1)
+                    vm.numberOfSolutions += parseInt(data.data.len);
               }
 
               function statsErrorFn(data, status, headers, config) {
@@ -72,9 +80,23 @@
         }
     }
 
-    function showStats(id) {
+    function showNumberOfSolutions() {
+        return 'Wypełniono ' + vm.numberOfSolutions + ' razy';
+    }
 
-        return id;
+    function showStats(id) {
+        var searched = vm.stats.find(isSearched);
+
+        if(searched == undefined)
+            return -1;
+
+        return 'Wybrano ' + searched.len + '/' + vm.numberOfSolutions + ' razy';
+
+        function isSearched(element, index, array) {
+            if(element.id == id)
+                return true;
+            return false;
+        }
     }
 
     function validate() {

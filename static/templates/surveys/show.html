@@ -1,6 +1,7 @@
 <div class="show">
       <div class="jumbotron">
         <h4>{{ vm.survey.title }}</h4>
+        {{ vm.showNumberOfSolutions() }}
       </div>
 
     <form role="form" class="answerform" ng-submit="vm.submit()">
@@ -12,7 +13,7 @@
         <div class="form-control" data-ng-repeat="answer in question.answers">
             <input type="radio" ng-model="question.selected" data-ng-value="answer" />
             {{answer.content}}
-            {{vm.showStats(answer.id)}}
+            <b>{{vm.showStats(answer.id)}}</b>
         </div>
       </div>
 
