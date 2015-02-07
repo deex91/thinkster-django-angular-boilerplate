@@ -10,7 +10,9 @@
             <label for="question">{{question.content}}:</label>
         </div>
         <div class="form-control" data-ng-repeat="answer in question.answers">
-                <input type="radio" ng-model="question.selected" data-ng-value="answer" /> {{answer.content}}
+            <input type="radio" ng-model="question.selected" data-ng-value="answer" />
+            {{answer.content}}
+            {{vm.showStats(answer.id)}}
         </div>
       </div>
 

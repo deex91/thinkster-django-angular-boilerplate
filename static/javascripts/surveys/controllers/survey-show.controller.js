@@ -20,6 +20,7 @@
     var vm = this;
 
     vm.submit = submit;
+    vm.showStats = showStats;
 
     activate();
 
@@ -35,18 +36,45 @@
         Surveys.show(id).then(surveySuccessFn, surveyErrorFn);
 
         function surveySuccessFn(data, status, headers, config) {
-          if(data.data.length == 1)
-            vm.survey = data.data[0];
+          if(data.data.length == 1) {
+              vm.survey = data.data[0];
+              makeStats();
+          }
           else {
             $location.url('/');
             Snackbar.error('Nieznany błąd.');
           }
+
+          function makeStats() {
+              var i, j;
+              vm.stats = [];
+              for(i = 0; i < vm.survey.questions.length; ++i) {
+                  for(j = 0; j < vm.survey.questions[i].answers.length; ++j) {
+                      Surveys.stats(vm.survey.questions[i].answers[j].id).then(statsSuccessFn, statsErrorFn);
+                  }
+              }
+
+              function statsSuccessFn(data, status, headers, config) {
+                  vm.stats.push(data.data);
+              }
+
+              function statsErrorFn(data, status, headers, config) {
+                  $location.url('/');
+                  Snackbar.error('Nieznany błąd.');
+              }
+          }
+
         }
 
         function surveyErrorFn(data, status, headers, config) {
           $location.url('/');
           Snackbar.error('Podana ankieta nie istnieje.');
         }
+    }
+
+    function showStats(id) {
+
+        return id;
     }
 
     function validate() {

@@ -76,4 +76,7 @@ class StatsViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
         data_len = serializer.data.__len__()
 
-        return Response(data_len)
+        return Response({
+            'id': pk,
+            'len': data_len
+        })
